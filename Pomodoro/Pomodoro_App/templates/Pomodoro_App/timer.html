@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Focus on work</title>
+  <link rel="stylesheet" href="{% static 'Pomodoro_App/styles.css' %}" />
+</head>
+
+<body>
+  <main class="app">
+    <div class="center">
+      <div class="button-group" id="js-mode-buttons">
+        <button data-mode="Pomodoro" class="button active pomodoro-button">
+          Pomodoro
+        </button>
+        <button data-mode="shortBreak" class="button short-break-button">
+          Short Break
+        </button>
+        <button data-mode="longBreak" class="button long-break-button">
+          Long Break
+        </button>
+      </div>
+      <div class="clock" id="js-clock">
+        <div id="clock-pomodoro">
+          <span id="js-minutes">25</span>
+          <span class="separator">:</span>
+          <span id="js-seconds">00</span>
+        </div>
+      </div>
+      <div class="submit">
+        <button class="submit-button" data-action="start" id="js-submit">
+          Wind Up
+        </button>
+      </div>
+    </div>
+
+    <!-- progress bar -->
+    <progress id="js-progress-bar" value="0" max="100"></progress>
+
+    <!-- task list -->
+    <div id="tasks-model">
+      <form method="post" action="{% url 'Pomodoro:timer'%}">
+        {% csrf_token %}
+        <h2 class="task-heading">Tasks</h2>
+        {% for field in task_form %}
+        {% if field.name == "task_text" %}
+        {{ field }}
+        {% endif %}
+        {% endfor %}
+        <button type="submit" class="add-task">Add</button>
+      </form>
+      <br>
+      <br>
+      <div class="task-list">
+        {% for task in latest_task_list %}
+          <!-- so, request.POST is getting the "value" from input tag not "name" -->
+          <input type="checkbox" id="task-{{forloop.counter }}" name="task-list" data-taskid = "{{task.id}}">
+          <label for="task-{{forloop.counter }}"><strong>{{ task.task_text }}</strong></label>
+          <a id="{{task.id}}" href="{% url 'Pomodoro:task-deletion' task.id %}" type="button">Delete</a>
+          <br>
+        {% endfor %}
+      </div>
+    </div>
+
+
+    <div class="hidden">
+      <audio id="pomodoro-audio" src="{{ pomodoro_sound }}"></audio>
+      <audio id="break-audio" src="{{ break_sound }}"></audio>
+    </div>
+  </main>
+  <script>
+    // please put '{{ serialized_data| safe }}' this in single quotes not double quotes inside
+    // the json.parse to avoid any errors.  
+    var dataFromDatabase = JSON.parse('{{ serialized_data| safe }}');
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
+  <script src="{% static 'Pomodoro_App/index.js'%}"></script>
+</body>
+
+</html>

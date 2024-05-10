@@ -1,0 +1,56 @@
+:root {
+  --Pomodoro: #756ab6;
+  --shortBreak: #ac87c5;
+  --longBreak: #e0aed0;
+}
+
+.center {
+  width: 50%;
+  border: 3px solid red;
+  padding: 5px 10px;
+  margin: 10% 20%;
+  display: block;
+  align-items: center;
+}
+
+/* styling progress bar */
+progress[value] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20%;
+  height: 2em;
+  margin-left: 34em;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: red;
+}
+
+/* styling tasks list */
+/* TODO: Still needed to be done. But leaving now for completing the backend. */
+#tasks-list{
+  margin:0 auto;
+  width: 100%;
+}
+
+.task-heading{
+  width:30%;
+  padding-right:4rem;
+}
+
+#task{
+  background-color: white;
+  /* top | right | bottom | left */
+  /* margin: 4rem 0 1rem 32rem; */
+  width: 25%;
+  height: 2.5em;
+  border-radius: 0.5rem;
+  font-size: large;
+  border: 0;
+}

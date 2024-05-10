@@ -1,0 +1,94 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro Timer</title>
+</head>
+
+<body>
+  <div class="center">
+    <form method="post" id="timer_settings" action="{% url 'Pomodoro:timer'%}">
+      {% csrf_token %} {% if error_message %}
+      <p><strong>{{ error_message }}</strong></p>
+      {% endif %}
+      <h2>Timer ( minutes )</h2>
+      {% for field in timer_form%} {% if field.name == "pomodoro"%}
+      <div>
+        <label for="Pomodoro">Pomodoro</label>
+        {{ field }}
+      </div>
+      <br />
+      {% elif field.name == "short_break"%}
+      <div>
+        <label for="short-break">Short Break</label>
+        {{ field }}
+      </div>
+      <br />
+      {% elif field.name == "long_break"%}
+      <div>
+        <label for="long-break">Long Break</label>
+        {{ field }}
+      </div>
+      <br />
+      {% elif field.name == "auto_start_breaks"%}
+      <div>
+        <label for="auto-start-breaks">Auto Start Breaks</label>
+        {{field}}
+      </div>
+      <br />
+      {% elif field.name == "auto_start_pomodoros"%}
+      <div>
+        <label for="auto-start-pomodoros">Auto Start Pomodoros</label>
+        {{field}}
+      </div>
+      <br />
+      {% elif field.name == "number_of_interval" %}
+      <div>
+        <label for="number-of-intervals">Long Break Intervals</label>
+        {{ field }}
+      </div>
+      {% endif %} {% endfor %}
+      <br />
+      <hr />
+      <div class="sounds-container">
+        <h2>Sound</h2>
+        <div class="pomodoro-sounds">
+          <h3>Pomodoro Sound</h3>
+          <select id="pomodoro-audio" name="pomodoro_selected_audio" onchange="playsound('pomodoro-audio')">
+            <option value="none">--Select Audio--</option>
+            {% for play in sounds %}
+            <option value="{{play.sound.url}}">{{play.sound_name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="break-sounds">
+          <h3>Breaks Sound</h3>
+          <select id="break-audio" name="breaks_selected_audio" onchange="playsound('break-audio')">
+            <option value="none">--Select Audio--</option>
+            {% for play in sounds %}
+            <option value="{{play.sound.url}}">{{play.sound_name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <audio id="player">
+          <source id="sound-source" src="" type="audio/mp3" />
+          Your browser doesnot support the audio tag.
+        </audio>
+      </div>
+      <br />
+      <br />
+      <hr>
+      <div class="button">
+        <input type="submit" value="Save" />
+        <input type="reset" value="Reset" />
+      </div>
+    </form>
+  </div>
+  <script src="{% static 'Pomodoro_App/settings.js' %}"></script>
+</body>
+
+</html>
