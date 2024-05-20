@@ -22,7 +22,7 @@ def settings(request):
         "blocksite_form":blocksite_form,
         "sounds": sounds,
     }
-    return render(request, "Pomodoro_App\\settings.html", context)
+    return render(request, "Pomodoro_App/settings.html", context)
 
 
 # view for the actuall timer.
@@ -34,6 +34,8 @@ def pomodoro_timer(request):
     try:
         # the topmost pomodoro is going to the timer.js
         pomodoro = Timer.objects.order_by("-published_date").first()
+        if pomodoro == None:
+            raise Http404
         serialized_data = serializers.serialize("json", [pomodoro])
     except Http404:
         return render(
@@ -73,9 +75,15 @@ def pomodoro_timer(request):
     latest_task_list = Tasks.objects.all() 
 
     if request.method == "GET":
-        print(request.GET)
-        # task = Tasks.objects.get(id = task_id)
-        # print(task)
+        task_id = request.GET.get('task_id',False)
+        checked = request.GET.get("checked",False)
+        if task_id:
+            task = Tasks.objects.get(id = task_id)
+            if checked == '1':
+                task.compeleted = True
+            else:
+                task.compeleted = False
+            task.save()
 
     context = {
         "pomodoro": pomodoro,
@@ -86,7 +94,7 @@ def pomodoro_timer(request):
         "latest_task_list":latest_task_list,
     }
 
-    return render(request, "Pomodoro_App\\timer.html", context)
+    return render(request, "Pomodoro_App/timer.html", context)
 
 def deleteTask(request,task_id):
     task = get_object_or_404(Tasks,pk = task_id)
@@ -94,3 +102,6 @@ def deleteTask(request,task_id):
     # redirect("Pomodoro:timer") ----> this will take me to the previous instance of the pomodoro_timer
     #  view.
     return redirect("Pomodoro:timer")
+
+def wallClock(request):
+    return render(request, "Pomodoro_App/clock.html")

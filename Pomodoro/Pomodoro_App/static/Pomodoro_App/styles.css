@@ -1,34 +1,123 @@
-:root {
-  --Pomodoro: #756ab6;
-  --shortBreak: #ac87c5;
-  --longBreak: #e0aed0;
+/* top | right | bottom | left */
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
 
+
+:root {
+  --Pomodoro: #86469C;
+  --shortBreak: #D6589F;
+  --longBreak: #D895DA;
+}
+
+/* timer box styling */
 .center {
-  width: 50%;
-  border: 3px solid red;
-  padding: 5px 10px;
-  margin: 10% 20%;
-  display: block;
+  max-width: 30rem;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(255, 255, 255, .15);  
+  backdrop-filter: blur(5px); 
+  padding-top: 10px;
+  border-radius: 2%;
+  color: white;
+}
+
+.center #js-mode-buttons{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 15px 50px 10px 50px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.center #js-mode-buttons .button{
+  padding:3px 4px 3px 4px;
+  background-color: var(--Pomodoro);
+  border-radius: 7%;
+}
+
+.center #js-clock{
+  display: flex;
+  justify-content: center;
+  font-size: 7rem;
+  padding-bottom: 26px;
+  font-weight: 600;
+}
+
+/* styling submint button. */
+.center .submit{
+  display: flex;
+  justify-content: space-evenly;
   align-items: center;
+  padding-bottom: 30px;
+}
+
+.center .submit #js-submit{
+  font-size: 1.7rem;
+  text-transform: uppercase;
+	color: var(--Pomodoro);
+  background-color: white;
+  border: none;
+  box-shadow: 0 6px #e0dad6;
+	cursor: pointer;
+  letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+  height: 4rem;
+  width: 12rem;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+  border-radius: 5px;
+}
+
+.center .submit #js-submit::after{
+  content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.center .submit #js-submit:hover{
+  box-shadow: 0 4px #e0dad6;
+	top: 2px;
+}
+
+.center .submit #js-submit:active{
+  box-shadow: 0 0 #e0dad6;
+	top: 6px;
 }
 
 /* styling progress bar */
-progress[value] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20%;
-  height: 2em;
-  margin-left: 34em;
+
+#progress-bar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-progress[value]::-webkit-progress-bar {
+#progress-bar progress[value] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 60%;
+  height: 2.2em;
+}
+
+#progress-bar progress[value]::-webkit-progress-bar {
   background-color: #eee;
   border-radius: 2px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
-progress[value]::-webkit-progress-value {
+#progress-bar progress[value]::-webkit-progress-value {
   background-color: red;
 }
 
@@ -54,3 +143,47 @@ progress[value]::-webkit-progress-value {
   font-size: large;
   border: 0;
 }
+
+/* navbar styling*/
+#navbar{
+  background-color: white;
+  padding:7px 16px 7px 16px;
+  margin: 0;
+  border-bottom: solid red 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#navbar a{
+  color: inherit;
+  text-decoration: none;
+}
+
+#navbar .div-brand{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#brand-name{
+  position: relative;
+  color: red;
+  font-size: 2rem;
+  display: inline;
+  font-family:sans-serif;
+  margin:0 0 0 0.6rem;
+}
+
+#navbar-section .navbar-links{
+  margin: 0;
+  padding: 0;
+}
+
+#navbar-section .navbar-links a{
+  font-size: 1.3rem;
+  margin-left: 2rem;
+  font-family:sans-serif;
+  color: #A0153E;
+}
+
+

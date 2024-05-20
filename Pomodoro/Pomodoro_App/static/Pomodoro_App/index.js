@@ -182,6 +182,7 @@ function handlemode(event) {
 // js for task list
 // 1) When clicked on checkbox, the text should be crossed over by a line.
 // 2) When clicked on delete button, the text should be removed from the list not from the database.
+      // 2) Delete button is on timer.html page
 
 // 1) Done
 // got all the checkedTasks
@@ -193,25 +194,29 @@ checkedTasks.forEach((checkbox)=>{
     let labelAssociated = document.querySelector(`label[for='${task_id}']`)
     if(checkbox.checked){
       labelAssociated.innerHTML = `<s>${labelAssociated.textContent}</s>`
-      let checkboxTaskId = checkbox.dataset.taskid;
-      console.log(checkboxTaskId)
       // using ajax to send the id of the checked task so that i can get end-time of the task.
-      $.ajax({
-        type:"GET",
-        url: "/Pomodoro_App/timer",
-        data:{
-          task_id:checkboxTaskId
-        },
-        success:()=>{
-          console.log("it happened")
-        },
-      })
+      notify_database(checkbox.dataset.taskid,1);
     }
     else{
       labelAssociated.innerHTML = `<strong>${labelAssociated.textContent}</strong>`;
+      notify_database(checkbox.dataset.taskid,0);
     }
   })
 })
 
-// 2) Delete button is on timer.html page
+function notify_database(checkboxTaskId,is_checked){
+  $.ajax({
+    type:"GET",
+    url: "/Pomodoro_App/timer/",
+    data:{
+      task_id:checkboxTaskId,
+      checked:is_checked
+    },
+    success:()=>{
+      console.log("it happened")
+    },
+  })
+}
 
+// creating clock for which shows actual time.
+// https://codepen.io/kylewetton/pen/QJbOjw
